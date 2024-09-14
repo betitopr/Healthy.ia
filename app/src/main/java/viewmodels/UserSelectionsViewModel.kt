@@ -15,8 +15,8 @@ class UserSelectionsViewModel : ViewModel() {
 
     // Variable para almacenar el peso
     var peso by mutableStateOf(70f) // Valor inicial, por ejemplo, 70 Kg
-    var pesoObjetivo by mutableStateOf(70f) // Valor inicial para el peso objetivo
-
+    var pesoObjetivo by mutableStateOf(70f)
+        private set
     // Variable para almacenar el objetivo
     var objetivo by mutableStateOf("Perder peso")
 
@@ -47,8 +47,8 @@ class UserSelectionsViewModel : ViewModel() {
     fun updatePeso(newPeso: Float) {
         peso = newPeso
     }
-    fun updatePesoObjetivo(newValue: Float) {
-        pesoObjetivo = newValue
+    fun updatePesoObjetivo(newPesoObjetivo: Float) {
+        pesoObjetivo= newPesoObjetivo
     }
 
     // Función para actualizar la edad

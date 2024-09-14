@@ -13,7 +13,14 @@ import androidx.compose.material3.Slider
 import com.example.healthy.presentation.viewmodels.UserSelectionsViewModel
 
 @Composable
-fun PesoObjetivoScreen(userSelectionsViewModel: UserSelectionsViewModel, onContinueClick: () -> Unit) {
+
+fun PesoObjetivoScreen(
+    userSelectionsViewModel: UserSelectionsViewModel,
+    onContinueClick: () -> Unit
+) {
+    // Obtener el valor mutable del peso objetivo desde el ViewModel
+    val pesoObjetivo by remember { mutableStateOf(userSelectionsViewModel.pesoObjetivo) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,9 +39,9 @@ fun PesoObjetivoScreen(userSelectionsViewModel: UserSelectionsViewModel, onConti
             min = 40f,
             max = 150f,
             unit = "Kg",
-            currentValue = userSelectionsViewModel.pesoObjetivo,
+            currentValue = pesoObjetivo,
             onValueChange = { newValue ->
-                userSelectionsViewModel.updatePesoObjetivo(newValue)
+                userSelectionsViewModel.updatePesoObjetivo(newValue) // Actualizar el peso objetivo en el ViewModel
             }
         )
 
@@ -47,9 +54,13 @@ fun PesoObjetivoScreen(userSelectionsViewModel: UserSelectionsViewModel, onConti
 }
 
 
+
 @Preview(showBackground = true)
 @Composable
 fun PesoObjetivoScreenPreview() {
-    val viewModel = UserSelectionsViewModel() // Utiliza un ViewModel de ejemplo para la vista previa
+    val viewModel = UserSelectionsViewModel().apply {
+        // Establece un valor inicial para la vista previa
+        updatePesoObjetivo(70f)
+    }
     PesoObjetivoScreen(userSelectionsViewModel = viewModel, onContinueClick = {})
 }

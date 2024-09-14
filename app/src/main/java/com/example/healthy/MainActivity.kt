@@ -87,12 +87,13 @@ fun AppNavGraph(
             PesoScreen(
                 userSelectionsViewModel = userSelectionsViewModel,
                 onContinueClick = {
-                    navController.navigate("altura")
+                    navController.navigate("pesoObjetivo")
                 }
             )
         }
         composable("pesoObjetivo") {
-            PesoObjetivoScreen(userSelectionsViewModel, onContinueClick = {
+            PesoObjetivoScreen(userSelectionsViewModel,
+                onContinueClick = {
                 navController.navigate("altura")
             })
         }

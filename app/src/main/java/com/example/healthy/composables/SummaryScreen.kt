@@ -22,6 +22,7 @@ fun SummaryScreen(
 ) {
     val altura by userSelectionsViewModel.altura.collectAsState()
     val peso by remember { mutableStateOf(userSelectionsViewModel.peso) }
+    val pesoObjetivo by remember { mutableStateOf(userSelectionsViewModel.pesoObjetivo) } // Nuevo peso objetivo
     val objetivo by remember { mutableStateOf(userSelectionsViewModel.objetivo) }
     val edad by remember { mutableStateOf(userSelectionsViewModel.edad) }
     val entrenamientoFuerza by remember { mutableStateOf(userSelectionsViewModel.entrenamientoFuerza) }
@@ -43,6 +44,7 @@ fun SummaryScreen(
 
         Text(text = "Altura: ${altura.toInt()} cm")
         Text(text = "Peso: ${peso.toInt()} kg")
+        Text(text = "Peso Objetivo: ${pesoObjetivo.toInt()} kg") // Mostrar el peso objetivo
         Text(text = "Objetivo: $objetivo")
         Text(text = "Edad: $edad años")
         Text(text = "Entrenamiento de Fuerza: $entrenamientoFuerza")
@@ -73,6 +75,7 @@ fun SummaryScreenPreview() {
         // Establece valores iniciales para la vista previa
         updateAltura(170f)
         updatePeso(70f)
+        updatePesoObjetivo(65f) // Establece un peso objetivo para la vista previa
         updateObjetivo("Perder peso")
         updateEdad(25)
         updateEntrenamientoFuerza("Sí")
