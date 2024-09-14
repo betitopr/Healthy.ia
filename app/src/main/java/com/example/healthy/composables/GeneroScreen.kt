@@ -1,20 +1,22 @@
 package com.example.healthy.composables
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.RadioButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.healthy.presentation.viewmodels.UserSelectionsViewModel
 
 @Composable
-fun GeneroScreen(onContinueClick: () -> Unit) {
+fun GeneroScreen(
+    userSelectionsViewModel: UserSelectionsViewModel,
+    onContinueClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,7 +34,7 @@ fun GeneroScreen(onContinueClick: () -> Unit) {
         RadioButtonGroup(
             options = listOf("Femenino", "Masculino", "Otro"),
             onOptionSelected = { selectedOption ->
-                // Aquí puedes manejar la opción seleccionada si es necesario
+                userSelectionsViewModel.updateGenero(selectedOption)
             }
         )
 
@@ -45,9 +47,11 @@ fun GeneroScreen(onContinueClick: () -> Unit) {
 }
 
 
-
 @Preview(showBackground = true)
 @Composable
 fun GeneroScreenPreview() {
-    GeneroScreen(onContinueClick = {})
+    GeneroScreen(
+        userSelectionsViewModel = UserSelectionsViewModel(), // Proporciona una instancia de UserSelectionsViewModel
+        onContinueClick = { /* Acción a realizar cuando se haga clic en "Continuar" */ }
+    )
 }

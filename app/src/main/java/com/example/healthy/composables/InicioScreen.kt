@@ -3,8 +3,6 @@ package com.example.healthy.composables
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,16 +13,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.healthy.R
+import com.example.healthy.presentation.viewmodels.UserSelectionsViewModel
 
 @Composable
-fun InicioScreen(onContinueClick: () -> Unit) {
+fun InicioScreen(
+    userSelectionsViewModel: UserSelectionsViewModel, // Recibe el ViewModel como parámetro
+    onContinueClick: () -> Unit // Acción para el botón
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Ejemplo de imagen. Asegúrate de tener la imagen en res/drawable.
-        Image(painter = painterResource(id = R.drawable.food_image), contentDescription = null)
+        Image(
+            painter = painterResource(id = R.drawable.food_image),
+            contentDescription = null
+        )
         Text(
             text = "Come Mejor y obtén mejores resultados!",
             style = MaterialTheme.typography.headlineSmall,
@@ -40,5 +45,8 @@ fun InicioScreen(onContinueClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun InicioScreenPreview() {
-    InicioScreen(onContinueClick = {})
+    InicioScreen(
+        userSelectionsViewModel = UserSelectionsViewModel(), // Proporciona una instancia de UserSelectionsViewModel
+        onContinueClick = { /* Acción a realizar cuando se haga clic en "Continuar" */ }
+    )
 }

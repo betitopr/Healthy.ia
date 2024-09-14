@@ -11,9 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.healthy.presentation.viewmodels.UserSelectionsViewModel
 
 @Composable
-fun EdadScreen(onContinueClick: () -> Unit) {
+fun EdadScreen(
+    userSelectionsViewModel: UserSelectionsViewModel,
+    onContinueClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,7 +32,13 @@ fun EdadScreen(onContinueClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        NumberPicker(start = 17, end = 50, onNumberSelected = { /* handle selection */ })
+        NumberPicker(
+            start = 17,
+            end = 50,
+            onNumberSelected = { selectedNumber ->
+                userSelectionsViewModel.updateEdad(selectedNumber)
+            }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -63,5 +73,8 @@ fun NumberPicker(start: Int, end: Int, onNumberSelected: (Int) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun EdadScreenPreview() {
-    EdadScreen(onContinueClick = {})
+    EdadScreen(
+        userSelectionsViewModel = UserSelectionsViewModel(), // Proporciona una instancia de UserSelectionsViewModel
+        onContinueClick = { /* Acción a realizar cuando se haga clic en "Continuar" */ }
+    )
 }

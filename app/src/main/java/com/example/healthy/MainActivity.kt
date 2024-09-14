@@ -3,7 +3,8 @@ package com.example.healthy
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,16 +13,22 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.healthy.composables.*
+import com.example.healthy.presentation.viewmodels.UserSelectionsViewModel
 import com.example.healthy.ui.theme.HealthyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val userSelectionsViewModel = UserSelectionsViewModel()
         setContent {
             HealthyTheme {
                 val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    AppNavGraph(navController = navController, modifier = Modifier.padding(innerPadding))
+                    AppNavGraph(
+                        navController = navController,
+                        userSelectionsViewModel = userSelectionsViewModel,
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
@@ -29,54 +36,107 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppNavGraph(navController: androidx.navigation.NavHostController, modifier: Modifier = Modifier) {
+
+fun AppNavGraph(
+    navController: androidx.navigation.NavHostController,
+    userSelectionsViewModel: UserSelectionsViewModel,
+    modifier: Modifier = Modifier
+) {
     NavHost(navController = navController, startDestination = "inicio") {
         composable("inicio") {
-            InicioScreen(onContinueClick = {
-                navController.navigate("objetivo")
-            })
+            InicioScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                onContinueClick = {
+                    navController.navigate("objetivo")
+                }
+            )
         }
         composable("objetivo") {
-            ObjetivoScreen(onContinueClick = {
-                navController.navigate("comoConseguirlo")
-            })
+            ObjetivoScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                onContinueClick = {
+                    navController.navigate("comoConseguirlo")
+                }
+            )
         }
         composable("comoConseguirlo") {
-            ComoConseguirloScreen(onContinueClick = {
-                navController.navigate("edad")
-            })
+            ComoConseguirloScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                onContinueClick = {
+                    navController.navigate("edad")
+                }
+            )
         }
         composable("edad") {
-            EdadScreen(onContinueClick = {
-                navController.navigate("genero")
-            })
+            EdadScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                onContinueClick = {
+                    navController.navigate("genero")
+                }
+            )
         }
         composable("genero") {
-            GeneroScreen(onContinueClick = {
-                navController.navigate("peso")
-            })
+            GeneroScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                onContinueClick = {
+                    navController.navigate("peso")
+                }
+            )
         }
         composable("peso") {
-            PesoScreen(onContinueClick = {
+            PesoScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                onContinueClick = {
+                    navController.navigate("altura")
+                }
+            )
+        }
+        composable("pesoObjetivo") {
+            PesoObjetivoScreen(userSelectionsViewModel, onContinueClick = {
                 navController.navigate("altura")
             })
         }
         composable("altura") {
-            AlturaScreen(onContinueClick = {
-                navController.navigate("nivelActividad")
-            })
+            AlturaScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                onContinueClick = {
+                    navController.navigate("nivelActividad")
+                }
+            )
         }
         composable("nivelActividad") {
-            NivelActividadScreen(onContinueClick = {
-                navController.navigate("entrenamientoFuerza")
-            })
+            NivelActividadScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                onContinueClick = {
+                    navController.navigate("entrenamientoFuerza")
+                }
+            )
         }
         composable("entrenamientoFuerza") {
-            EntrenamientoFuerzaScreen(onContinueClick = {
-                // Navegar a la siguiente pantalla que necesites
-            })
+            EntrenamientoFuerzaScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                onContinueClick = {
+                    navController.navigate("summary")
+                }
+            )
         }
-        // Aquí puedes añadir más pantallas si es necesario
+        composable("summary") {
+            SummaryScreen(
+                userSelectionsViewModel = userSelectionsViewModel,
+                navController = navController, // Asegúrate de pasar el navController
+                onEditClick = {
+                    navController.popBackStack() // Opcional, vuelve a la pantalla anterior
+                },
+                onCalcularDatosClick = {
+                    navController.navigate("calcularDatosSalud") // Reemplaza con la ruta correcta
+                }
+            )
+        }
+        composable("calcularDatosSalud") {
+            CalcularDatosSaludScreen(
+                userSelectionsViewModel = userSelectionsViewModel
+            )
+        }
     }
 }
 
@@ -85,6 +145,10 @@ fun AppNavGraph(navController: androidx.navigation.NavHostController, modifier: 
 fun DefaultPreview() {
     HealthyTheme {
         val navController = rememberNavController()
-        AppNavGraph(navController = navController)
+        val userSelectionsViewModel = UserSelectionsViewModel()
+        AppNavGraph(
+            navController = navController,
+            userSelectionsViewModel = userSelectionsViewModel
+        )
     }
 }

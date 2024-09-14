@@ -13,7 +13,7 @@ import androidx.compose.material3.Slider
 import com.example.healthy.presentation.viewmodels.UserSelectionsViewModel
 
 @Composable
-fun PesoScreen(userSelectionsViewModel: UserSelectionsViewModel, onContinueClick: () -> Unit) {
+fun PesoObjetivoScreen(userSelectionsViewModel: UserSelectionsViewModel, onContinueClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -22,7 +22,7 @@ fun PesoScreen(userSelectionsViewModel: UserSelectionsViewModel, onContinueClick
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "¿Cuál es tu peso actual en este momento?",
+            text = "¿Cuál es tu peso objetivo?",
             style = MaterialTheme.typography.headlineSmall
         )
 
@@ -32,9 +32,9 @@ fun PesoScreen(userSelectionsViewModel: UserSelectionsViewModel, onContinueClick
             min = 40f,
             max = 150f,
             unit = "Kg",
-            currentValue = userSelectionsViewModel.peso,
+            currentValue = userSelectionsViewModel.pesoObjetivo,
             onValueChange = { newValue ->
-                userSelectionsViewModel.updatePeso(newValue)
+                userSelectionsViewModel.updatePesoObjetivo(newValue)
             }
         )
 
@@ -46,32 +46,10 @@ fun PesoScreen(userSelectionsViewModel: UserSelectionsViewModel, onContinueClick
     }
 }
 
-@Composable
-fun SliderPicker(min: Float, max: Float, unit: String, currentValue: Float, onValueChange: (Float) -> Unit) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(horizontal = 16.dp) // Padding para el SliderPicker
-    ) {
-        Text(
-            text = "${currentValue.toInt()} $unit",
-            style = MaterialTheme.typography.bodyMedium
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Slider(
-            value = currentValue,
-            onValueChange = {
-                onValueChange(it) // Notificar el cambio de valor
-            },
-            valueRange = min..max
-        )
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
-fun PesoScreenPreview() {
+fun PesoObjetivoScreenPreview() {
     val viewModel = UserSelectionsViewModel() // Utiliza un ViewModel de ejemplo para la vista previa
-    PesoScreen(userSelectionsViewModel = viewModel, onContinueClick = {})
+    PesoObjetivoScreen(userSelectionsViewModel = viewModel, onContinueClick = {})
 }

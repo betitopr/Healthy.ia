@@ -10,9 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.healthy.presentation.viewmodels.UserSelectionsViewModel
 
 @Composable
-fun ComoConseguirloScreen(onContinueClick: () -> Unit) {
+fun ComoConseguirloScreen(
+    userSelectionsViewModel: UserSelectionsViewModel,
+    onContinueClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,7 +32,10 @@ fun ComoConseguirloScreen(onContinueClick: () -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
 
         RadioButtonGroup(
-            options = listOf("Necesito un plan nutricional", "Necesito contar mis calorías")
+            options = listOf("Necesito un plan nutricional", "Necesito contar mis calorías"),
+            onOptionSelected = { selectedOption ->
+                userSelectionsViewModel.addSelection(selectedOption)
+            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -40,7 +47,10 @@ fun ComoConseguirloScreen(onContinueClick: () -> Unit) {
 }
 
 @Composable
-fun RadioButtonGroup(options: List<String>, onOptionSelected: (String) -> Unit = {}) {
+fun RadioButtonGroup(
+    options: List<String>,
+    onOptionSelected: (String) -> Unit = {}
+) {
     var selectedOption by remember { mutableStateOf(options[0]) } // Estado para la opción seleccionada
     Column {
         options.forEach { text ->
@@ -65,5 +75,8 @@ fun RadioButtonGroup(options: List<String>, onOptionSelected: (String) -> Unit =
 @Preview(showBackground = true)
 @Composable
 fun ComoConseguirloScreenPreview() {
-    ComoConseguirloScreen(onContinueClick = {})
+    ComoConseguirloScreen(
+        userSelectionsViewModel = UserSelectionsViewModel(), // Proporciona una instancia de UserSelectionsViewModel
+        onContinueClick = { /* Acción a realizar cuando se haga clic en "Continuar" */ }
+    )
 }

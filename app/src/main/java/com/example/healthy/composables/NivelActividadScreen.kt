@@ -9,9 +9,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.healthy.presentation.viewmodels.UserSelectionsViewModel
 
 @Composable
-fun NivelActividadScreen(onContinueClick: () -> Unit) {
+fun NivelActividadScreen(
+    userSelectionsViewModel: UserSelectionsViewModel,
+    onContinueClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -27,9 +31,14 @@ fun NivelActividadScreen(onContinueClick: () -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
 
         RadioButtonGroup(
-            options = listOf("Sedentarismo", "Ligeramente Activo", "Muy Activo", "Atleta profesional"),
+            options = listOf(
+                "Sedentarismo",
+                "Ligeramente Activo",
+                "Muy Activo",
+                "Atleta profesional"
+            ),
             onOptionSelected = { selectedOption ->
-                // Aquí puedes manejar la opción seleccionada si es necesario
+                userSelectionsViewModel.addSelection(selectedOption)
             }
         )
 
@@ -41,10 +50,11 @@ fun NivelActividadScreen(onContinueClick: () -> Unit) {
     }
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun NivelActividadScreenPreview() {
-    NivelActividadScreen(onContinueClick = {})
+    NivelActividadScreen(
+        userSelectionsViewModel = UserSelectionsViewModel(), // Proporciona una instancia de UserSelectionsViewModel
+        onContinueClick = { /* Acción a realizar cuando se haga clic en "Continuar" */ }
+    )
 }
